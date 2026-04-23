@@ -1,108 +1,239 @@
-Scientific Calculator
-A sleek, fully-featured scientific calculator built with pure HTML, CSS, and JavaScript — no frameworks, no dependencies, just one file.
+# Scientific Calculator
 
+A sleek, fully featured scientific calculator built with pure HTML, CSS and JavaScript — no frameworks, no dependencies, just one self-contained file.
 
+## Tech Stack
 
-#Features
-
-#Scientific Functions
-| Button | Function |
-|--------|----------|
-| `sin` `cos` `tan` | Trigonometric functions |
-| `sin⁻¹` `cos⁻¹` `tan⁻¹` | Inverse trigonometric functions |
-| `log` | Logarithm (base 10) |
-| `ln` | Natural logarithm (base e) |
-| `√x` | Square root |
-| `∛x` | Cube root |
-| `x²` | Square of a number |
-| `xʸ` | Power / exponentiation |
-| `n!` | Factorial |
-| `π` | Pi constant (3.14159…) |
-| `e` | Euler's number (2.71828…) |
-| `%` | Percentage |
-| `( )` | Parentheses for grouping |
-
-#Memory Functions
-| Button | Action |
-|--------|--------|
-| `MS` | Store current value to memory |
-| `MR` | Recall value from memory |
-| `M+` | Add current value to memory |
-| `M−` | Subtract current value from memory |
-| `MC` | Clear memory |
-
-#Angle Mode
-- Toggle between **DEG** (degrees) and **RAD** (radians) using the pill button in the top-right corner
-- All trigonometric functions respect the selected mode
-
-
-
-#Keyboard Shortcuts
-
-| Key | Action |
-|-----|--------|
-| `0–9` | Enter digits |
-| `.` | Decimal point |
-| `+` `-` `*` `/` | Arithmetic operators |
-| `^` | Exponentiation |
-| `%` | Percentage |
-| `(` `)` | Parentheses |
-| `Enter` or `=` | Calculate result |
-| `Backspace` | Delete last character |
-| `Escape` | All Clear (AC) |
+HTML5 • CSS3 • JavaScript • DOM Manipulation • Mathematical Computing
 
 ---
 
-#Getting Started
-No installation needed. Just open the file in any modern browser:
+## Overview
 
-```bash
-# Clone or download the project
-git clone https://github.com/your-username/scientific-calculator.git
+This project recreates a modern scientific calculator in the browser, combining advanced mathematical functionality with a polished glassmorphism interface and keyboard-driven usability.
 
-# Open in browser
+Designed as a frontend logic project, it demonstrates mathematical computation handling, UI engineering, DOM event management, and memory-state operations.
+
+---
+
+## Preview
+
+| Feature | Description                                        |
+| ------- | -------------------------------------------------- |
+| Theme   | Dark glassmorphism UI with ambient glow accents    |
+| Display | Dual-line expression and live result output        |
+| Input   | Mouse buttons and full keyboard support            |
+| Logic   | Arithmetic, scientific functions and memory system |
+
+---
+
+## Features
+
+### Scientific Functions
+
+| Button              | Function                |
+| ------------------- | ----------------------- |
+| `sin cos tan`       | Trigonometric functions |
+| `sin⁻¹ cos⁻¹ tan⁻¹` | Inverse trig functions  |
+| `log`               | Logarithm (base 10)     |
+| `ln`                | Natural logarithm       |
+| `√x`                | Square root             |
+| `∛x`                | Cube root               |
+| `x²`                | Square                  |
+| `xʸ`                | Exponentiation          |
+| `n!`                | Factorial               |
+| `π`                 | Pi constant             |
+| `e`                 | Euler constant          |
+| `%`                 | Percentage              |
+| `( )`               | Parentheses grouping    |
+
+---
+
+### Memory Functions
+
+| Button | Action               |
+| ------ | -------------------- |
+| `MS`   | Store current value  |
+| `MR`   | Recall memory        |
+| `M+`   | Add to memory        |
+| `M−`   | Subtract from memory |
+| `MC`   | Clear memory         |
+
+---
+
+### Angle Modes
+
+* Toggle between DEG and RAD
+* Trigonometric calculations dynamically respect selected mode
+
+---
+
+### Keyboard Shortcuts
+
+| Key            | Action      |
+| -------------- | ----------- |
+| `0–9`          | Digits      |
+| `.`            | Decimal     |
+| `+ - * /`      | Operators   |
+| `^`            | Power       |
+| `%`            | Percentage  |
+| `( )`          | Parentheses |
+| `Enter` or `=` | Evaluate    |
+| `Backspace`    | Delete last |
+| `Esc`          | All Clear   |
+
+---
+
+## Getting Started
+
+No installation required.
+
+```text id="sc1"
+scientific-calculator/
+└── index.html
+```
+
+Open directly in any modern browser:
+
+```bash id="sc2"
 open index.html
 ```
 
 Or simply double-click `index.html`.
 
+---
 
+## Project Architecture
 
-Project Structure
+### Single-file Design
 
+The entire application lives inside one self-contained file:
+
+* HTML — Interface structure
+* CSS — Styling, theming and animations
+* JavaScript — Calculator engine and event handling
+
+No package manager. No build step. No dependencies.
+
+---
+
+## Design Highlights
+
+* Dark glassmorphism aesthetic
+* Color-coded function grouping
+* Ripple animation on button press
+* Blinking display cursor
+* Responsive layout
+* Google Fonts:
+
+  * Share Tech Mono
+  * Rajdhani
+
+---
+
+## Built With
+
+### HTML5
+
+Semantic layout and calculator structure.
+
+### CSS3
+
+Used for:
+
+* Glassmorphism effects
+* Glow effects
+* CSS variables
+* Button animations
+* Responsive layout
+
+### Vanilla JavaScript
+
+Handles:
+
+* Expression parsing
+* Scientific calculations
+* Memory state
+* Keyboard input
+* Evaluation logic
+
+---
+
+## Technical Notes
+
+### Expression Engine
+
+Uses JavaScript `Function()` evaluation for controlled parsing.
+
+### Precision Handling
+
+Results auto-round to 10 significant figures to reduce floating-point noise.
+
+Example:
+
+```text id="sc3"
+0.1 + 0.2 → 0.3
 ```
-scientific-calculator/
-└── index.html       # Everything — HTML, CSS, and JS in one file
+
+---
+
+### Factorial Support
+
+Supports integers up to:
+
+```text id="sc4"
+170!
 ```
 
-The entire calculator lives in a single self-contained file with no external dependencies (except Google Fonts loaded via CDN).
+Beyond that returns infinity.
 
+---
 
+### Smart Handling
 
-#Design
-- **Dark glass morphism** aesthetic with ambient glow accents
-- **Color-coded buttons** — teal for functions, gold for operators, cyan for equals, red for clear, purple for constants
-- **Dual-line display** — expression history (top) and live result (bottom)
-- **Ripple animation** on every button press
-- **Blinking cursor** on the display
-- Fonts: [Share Tech Mono](https://fonts.google.com/specimen/Share+Tech+Mono) + [Rajdhani](https://fonts.google.com/specimen/Rajdhani) via Google Fonts
+* Auto-closes unbalanced parentheses
+* Prevents invalid expression crashes
+* Graceful error handling
 
+---
 
+## Concepts Demonstrated
 
-#Built With
-- **HTML5** — structure
-- **CSS3** — styling, animations, glassmorphism, CSS variables
-- **Vanilla JavaScript** — all calculator logic, keyboard handling, memory system
+* Mathematical logic implementation
+* DOM event handling
+* State management
+* Keyboard interaction systems
+* UI engineering
+* Scientific computation modeling
 
+---
 
+## Future Improvements
 
-#Notes
-- Expression evaluation uses `Function()` constructor for safe sandboxed eval
-- Floating-point results are auto-rounded to 10 significant figures to avoid noise (e.g. `0.1 + 0.2 = 0.3` not `0.30000000000000004`)
-- Factorial supports integers up to `170!` (beyond that returns `∞`)
-- Unclosed parentheses are auto-closed on evaluation
+Potential upgrades:
 
+* Calculation history panel
+* Theme switcher
+* Unit conversions
+* Graphing mode
+* Matrix operations
 
+---
 
-#License
-MIT License — free to use, modify, and distribute.
+## Browser Support
+
+| Browser     | Support   |
+| ----------- | --------- |
+| Chrome 90+  | Supported |
+| Firefox 88+ | Supported |
+| Safari 14+  | Supported |
+| Edge 90+    | Supported |
+
+---
+
+## License
+
+MIT License — free to use, modify and distribute.
+
+Built with HTML, CSS and vanilla JavaScript.
+No frameworks. No build tools. Just open and calculate.
