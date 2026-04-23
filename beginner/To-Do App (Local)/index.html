@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TaskFlow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+<div class="blob blob-3"></div>
+
+<div class="app">
+
+  <header class="header">
+    <div class="header-left">
+      <div class="avatar">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="8" r="4" fill="currentColor"/>
+          <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" fill="currentColor"/>
+        </svg>
+      </div>
+      <div>
+        <p class="welcome-label">Good <span id="timeLabel">day</span></p>
+        <h1 class="app-title">Task<span class="title-accent">Flow</span></h1>
+      </div>
+    </div>
+    <div class="date-block">
+      <div class="date-num" id="dateNum"></div>
+      <div class="date-month" id="dateMonth"></div>
+    </div>
+  </header>
+
+  <div class="stats-row">
+    <div class="stat-card teal-card">
+      <div class="stat-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.8"/>
+          <path d="M6 10l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="stat-info">
+        <span class="stat-big" id="stat-done">0</span>
+        <span class="stat-lbl">Completed</span>
+      </div>
+    </div>
+    <div class="stat-card coral-card">
+      <div class="stat-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M3 6h14M3 10h9M3 14h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="stat-info">
+        <span class="stat-big" id="stat-active">0</span>
+        <span class="stat-lbl">Active</span>
+      </div>
+    </div>
+    <div class="stat-card purple-card">
+      <div class="stat-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.8"/>
+          <path d="M10 6v4l2.5 2.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="stat-info">
+        <span class="stat-big" id="stat-pct">0%</span>
+        <span class="stat-lbl">Progress</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label">Add a task</div>
+
+  <div class="input-area">
+    <input id="taskInput" type="text" placeholder="What needs to be done?" maxlength="200" autocomplete="off">
+    <div class="input-bottom">
+      <div class="priority-group">
+        <button class="pri-btn active" data-p="none">None</button>
+        <button class="pri-btn" data-p="high">
+          <span class="pri-dot high-dot"></span>High
+        </button>
+        <button class="pri-btn" data-p="medium">
+          <span class="pri-dot med-dot"></span>Medium
+        </button>
+        <button class="pri-btn" data-p="low">
+          <span class="pri-dot low-dot"></span>Low
+        </button>
+      </div>
+      <button class="btn-add" onclick="addTask()">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+        </svg>
+        Add Task
+      </button>
+    </div>
+  </div>
+
+  <div class="tasks-header">
+    <div class="filter-row">
+      <button class="filter-btn active" data-filter="all" onclick="setFilter('all')">All</button>
+      <button class="filter-btn" data-filter="active" onclick="setFilter('active')">Active</button>
+      <button class="filter-btn" data-filter="done" onclick="setFilter('done')">Done</button>
+    </div>
+    <span class="task-count-badge" id="taskCountBadge">0</span>
+  </div>
+
+  <ul class="task-list" id="taskList"></ul>
+
+  <div class="footer">
+    <span id="footerCount"></span>
+    <button class="btn-clear" onclick="clearCompleted()">Clear completed</button>
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
