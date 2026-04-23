@@ -1,164 +1,252 @@
-TaskFlow
-A sleek, dark-themed task management web app with priority tagging, live stats, and full localStorage persistence — no build tools, no dependencies, just three files.
+# TaskFlow
 
+A sleek, dark-themed task management web application with priority tagging, live productivity stats, and browser localStorage persistence — no frameworks, no dependencies, just three files.
 
+## Tech Stack
 
-#Preview
+HTML5 • CSS3 • JavaScript • Local Storage • CRUD Operations
 
-| Feature | Description |
-|---|---|
-| Theme | Dark UI with animated teal/coral/purple blobs |
-| Fonts | Syne (headings) + Outfit (body) via Google Fonts |
-| Storage | Browser `localStorage` — data survives page reloads |
-| Responsive | Works on desktop and mobile |
+---
 
+## Overview
 
+TaskFlow goes beyond a basic to-do list by combining task organization, progress tracking, lightweight productivity analytics, and polished UI design.
 
-#Getting Started
-No installation required. Just download and open.
+Designed as a frontend logic project, it demonstrates state management, DOM manipulation, filtering logic, and client-side persistence.
 
-```
+---
+
+## Interface Preview
+
+![TaskFlow Dashboard](To-Do%20App.png)
+
+---
+
+## Preview
+
+| Feature    | Description                                   |
+| ---------- | --------------------------------------------- |
+| Theme      | Dark UI with animated teal/coral/purple blobs |
+| Fonts      | Syne + Outfit via Google Fonts                |
+| Storage    | Browser localStorage persistence              |
+| Responsive | Desktop and mobile compatible                 |
+
+---
+
+## Getting Started
+
+No installation required.
+
+```text id="td1"
 taskflow/
 ├── index.html
 ├── style.css
-└── script.js
+├── script.js
+└── To-Do App.png
 ```
 
-1. Download all three files into the same folder
-2. Open `index.html` in any modern browser
-3. Start adding tasks
+Open directly in any modern browser:
 
+```bash id="td2"
+open index.html
+```
 
+---
 
-#Features
-#Task Management
-- Add tasks — type and press `Enter` or click "Add Task"
-- Complete tasks — click the circle checkbox to toggle done/active
-- Edit tasks — click the pencil icon, edit inline, press `Enter` or click away to save. Press `Escape` to cancel
-- Delete tasks — click the trash icon on any task
-- Clear completed — removes all done tasks at once
+## Features
 
-#Priority Tags
-Each task can be tagged with a priority level before adding:
+### Task Management
 
-| Tag | Color | Use for |
-|---|---|---|
-| 🔴 High | Coral red | Urgent, must-do today |
-| 🟡 Medium | Amber yellow | Important but flexible |
-| 🟢 Low | Teal green | Nice to have |
-| — None | No tag | General tasks |
-Priority is shown as a colored pill under the task text, and a colored left-border accent on the task card.
+* Add tasks using button or Enter key
+* Toggle active/completed state
+* Inline task editing
+* Delete individual tasks
+* Clear all completed tasks
 
-#Filters
-Use the filter buttons to view:
-- All — every task
-- Active — incomplete tasks only
-- Done — completed tasks only
+---
 
-#Stats Bar
-Three live stat cards update as you work:
-- Completed — number of done tasks
-- Active — remaining tasks
-- Progress — percentage complete
+## Priority Tags
 
-#Smart Details
-- Time-aware greeting (morning / afternoon / evening / night)
-- Live date display in the header
-- Task count badge next to the filter row
+| Priority | Color     | Use Case        |
+| -------- | --------- | --------------- |
+| High     | Coral Red | Urgent tasks    |
+| Medium   | Amber     | Important tasks |
+| Low      | Teal      | Optional tasks  |
+| None     | Neutral   | General tasks   |
 
+Priority appears as:
 
+* Colored tag badge
+* Left-border task accent
 
-#File Overview
+---
 
-# `index.html`
-Semantic HTML structure. Loads Google Fonts, links `style.css`, and runs `script.js`. No framework or build step needed.
+## Filters
 
-# `style.css`
-All styling using CSS custom properties (`--variables`). Key sections:
-- Blob animations — three decorative blobs using `filter: blur` and `@keyframes`
-- Stat cards — teal / coral / purple color variants
-- Task items — priority left-border, hover lift, action reveal on hover
-- Responsive — `@media (max-width: 480px)` adjustments for mobile
+View tasks by:
 
-# `script.js`
-Vanilla JS, no dependencies. Key functions:
+* All
+* Active
+* Completed
 
-| Function | What it does |
-|---|---|
-| `addTask()` | Reads input + priority, prepends to `tasks[]`, re-renders |
-| `toggleTask(i)` | Flips `done` boolean for task at index `i` |
-| `editTask(i)` | Makes task text `contentEditable`, commits on blur/Enter |
-| `deleteTask(i)` | Splices task from array |
-| `clearCompleted()` | Filters out all done tasks |
-| `setFilter(f)` | Sets `currentFilter`, updates active button, re-renders |
-| `render()` | Rebuilds the task list DOM from current state + filter |
-| `updateStats()` | Syncs the three stat cards and count badge |
-| `save()` | Serializes `tasks[]` to `localStorage` |
+---
 
+## Live Stats Dashboard
 
+Three dynamic stat cards update automatically:
 
-#localStorage
+* Completed task count
+* Active task count
+* Progress percentage
 
-Tasks are saved under the key `tf2_tasks` as a JSON array. Each task object looks like:
+---
 
-```json
+## Smart Details
+
+* Time-aware greeting
+* Live date display
+* Task count badge
+* Animated visual background
+
+---
+
+## File Overview
+
+### `index.html`
+
+Semantic structure containing:
+
+* Task input interface
+* Filter controls
+* Stats dashboard
+* Task list rendering
+
+---
+
+### `style.css`
+
+Handles:
+
+* Blob background animations
+* Stat card styling
+* Priority tag variants
+* Hover interactions
+* Mobile responsiveness
+
+---
+
+### `script.js`
+
+Core application logic written in vanilla JavaScript.
+
+| Function           | Purpose                        |
+| ------------------ | ------------------------------ |
+| `addTask()`        | Adds task and re-renders       |
+| `toggleTask(i)`    | Toggles completion state       |
+| `editTask(i)`      | Inline editing                 |
+| `deleteTask(i)`    | Removes task                   |
+| `clearCompleted()` | Removes all completed tasks    |
+| `setFilter(f)`     | Changes filter state           |
+| `render()`         | Rebuilds task list UI          |
+| `updateStats()`    | Updates dashboard stats        |
+| `save()`           | Persists tasks to localStorage |
+
+---
+
+## Data Persistence
+
+Tasks are stored in browser localStorage under:
+
+```text id="td3"
+tf2_tasks
+```
+
+Task structure:
+
+```json id="td4"
 {
-  "id": 1713870000000,
-  "text": "Design the new landing page",
-  "done": false,
-  "priority": "high"
+"id":1713870000000,
+"text":"Design landing page",
+"done":false,
+"priority":"high"
 }
 ```
 
-> Note: Clearing browser site data will erase all tasks. Consider exporting tasks before clearing if needed.
+Clearing browser storage will erase tasks.
 
+---
 
+## Concepts Demonstrated
 
-#Browser Support
-Works in all modern browsers:
+* CRUD operations
+* State management
+* DOM manipulation
+* Client-side persistence
+* Dynamic filtering logic
+* UI component design
 
-| Browser | Support |
-|---|---|
-| Chrome 90+ | ✅ |
-| Firefox 88+ | ✅ |
-| Safari 14+ | ✅ |
-| Edge 90+ | ✅ |
+---
 
+## Browser Support
 
+| Browser     | Support   |
+| ----------- | --------- |
+| Chrome 90+  | Supported |
+| Firefox 88+ | Supported |
+| Safari 14+  | Supported |
+| Edge 90+    | Supported |
 
-#Customization
+---
 
-#Change the accent color
-In `style.css`, update the `--teal` variable:
-```css
-:root {
-  --teal: #00e5a0; /* change to any hex */
+## Customization
+
+### Change Accent Color
+
+```css id="td5"
+:root{
+--teal:#00e5a0;
 }
 ```
 
-#Change fonts
-Replace the Google Fonts URL in `index.html` and update the variables in `style.css`:
-```css
-:root {
-  --font-head: 'Your Font', sans-serif;
-  --font-body: 'Your Font', sans-serif;
+---
+
+### Change Fonts
+
+```css id="td6"
+:root{
+--font-head:'Your Font',sans-serif;
+--font-body:'Your Font',sans-serif;
 }
 ```
 
-#Add more priority levels
-In `index.html`, add a new `.pri-btn` inside `.priority-group`:
-```html
+---
+
+### Add More Priority Levels
+
+```html id="td7"
 <button class="pri-btn" data-p="urgent">
-  <span class="pri-dot" style="background:#ff3b3b"></span>Urgent
+Urgent
 </button>
 ```
-Then add a matching tag style in `style.css`:
-```css
-.tag-urgent { background: rgba(255,59,59,0.14); color: #ff3b3b; }
-```
 
+Then add matching styles in `style.css`.
 
+---
 
-#License
-Free to use and modify for personal and commercial projects.
-Built with HTML, CSS, and vanilla JavaScript. No frameworks. No build tools. Just open and use.
+## Future Improvements
+
+Potential upgrades:
+
+* Due dates and reminders
+* Drag-and-drop sorting
+* Pomodoro integration
+* Cloud sync with authentication
+
+---
+
+## License
+
+Free to use and modify for personal or commercial projects.
+
+Built with HTML, CSS and vanilla JavaScript.
+No frameworks. No build tools. Just open and use.
