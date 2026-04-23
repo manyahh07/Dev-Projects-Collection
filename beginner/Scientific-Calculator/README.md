@@ -2,6 +2,14 @@
 
 A sleek, fully featured scientific calculator built with pure HTML, CSS and JavaScript — no frameworks, no dependencies, just one self-contained file.
 
+
+
+## Preview
+
+![Scientific Calculator Interface](Calc.png)
+
+
+
 ## Tech Stack
 
 HTML5 • CSS3 • JavaScript • DOM Manipulation • Mathematical Computing
