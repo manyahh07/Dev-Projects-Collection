@@ -5,12 +5,12 @@ Download videos in multiple formats and resolutions — all from a polished desk
 
 
 #Features
-- 🎬 Cinematic dark UI — animated floating orbs, glassy card layout, accent bar
-- 📥 Multiple formats — Best Quality (MP4), Audio Only (MP3), 720p, 480p, 360p
-- 📊 Live progress bar — real-time percentage streamed from `yt-dlp`
-- 🔴 Pulsing status dot — animates during download, turns green on success
-- ⌨️ Keyboard support — press `Enter` to trigger download from the URL field
-- 🧵 Threaded downloads — UI stays fully responsive, no freezing
+- Cinematic dark UI — animated floating orbs, glassy card layout, accent bar
+- Multiple formats — Best Quality (MP4), Audio Only (MP3), 720p, 480p, 360p
+- Live progress bar — real-time percentage streamed from `yt-dlp`
+- Pulsing status dot — animates during download, turns green on success
+- Keyboard support — press `Enter` to trigger download from the URL field
+- Threaded downloads — UI stays fully responsive, no freezing
 
 
 
@@ -99,7 +99,5 @@ yt-downloader/
 
 #License
 MIT — free to use, modify, and distribute.
-
-
 
 > Built with Python · yt-dlp · tkinter
