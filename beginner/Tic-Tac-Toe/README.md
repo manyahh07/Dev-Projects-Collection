@@ -1,109 +1,156 @@
 # Tic Tac Toe
 
-A sleek browser-based Tic Tac Toe game built with vanilla JavaScript, featuring a modern UI, live game logic, winner detection, and instant replay — no frameworks, no dependencies, just three files.
+A sleek browser-based Tic Tac Toe game built with vanilla JavaScript, featuring game-state logic, winner detection, draw handling, and responsive gameplay — no frameworks, no dependencies, just three files.
+
+## Tech Stack
+
+HTML5 • CSS3 • JavaScript • Game Logic • DOM Manipulation
+
+---
+
+## Overview
+
+This project recreates the classic Tic Tac Toe game with a modern interface and dynamic gameplay logic.
+
+Designed as a frontend logic project, it demonstrates turn-based state management, condition evaluation, event handling, and interactive UI behavior.
+
+---
+
+## Interface Preview
+
+### Home Screen
+
+![Home Page](Home%20Page.png)
+
+### Winning State
+
+![Computer Wins](Computer%20Wins.png)
+
+### Draw State
+
+![Draw](Draw.png)
+
+---
 
 ## Preview
 
-| Feature    | Description                                        |
-| ---------- | -------------------------------------------------- |
-| Theme      | Minimal dark interface with neon-accent game board |
-| Gameplay   | Two-player turn based logic (X vs O)               |
-| Logic      | Win detection + draw detection                     |
-| Responsive | Works on desktop and mobile                        |
+| Feature    | Description                                   |
+| ---------- | --------------------------------------------- |
+| Theme      | Minimal dark interface with neon-accent board |
+| Gameplay   | Two-player turn-based logic                   |
+| Logic      | Win and draw detection                        |
+| Responsive | Desktop and mobile compatible                 |
+
+---
 
 ## Getting Started
 
-No installation required. Just download and open.
+No installation required.
 
-```text
+```text id="tt1"
 tic-tac-toe/
 ├── index.html
 ├── style.css
-└── script.js
+├── script.js
+├── Home Page.png
+├── Computer Wins.png
+└── Draw.png
 ```
 
-1. Download all three files into the same folder
-2. Open `index.html` in any modern browser
-3. Start playing
+Open directly in any modern browser:
+
+```bash id="tt2"
+open index.html
+```
 
 ---
 
 ## Features
 
-## Gameplay
+### Gameplay
 
 * Two-player local game (X and O)
 * Alternate turn handling
-* Click any empty square to place a move
+* Click any empty square to place moves
 * Automatic winner detection
-* Draw detection when board fills
-* Restart game button for instant replay
+* Draw detection
+* Instant replay via restart button
+
+---
 
 ## Smart Game Logic
 
-| Logic          | Description                            |
-| -------------- | -------------------------------------- |
-| Win Detection  | Checks all rows, columns and diagonals |
-| Turn Switching | Automatically alternates players       |
-| Draw Check     | Detects stalemate conditions           |
-| Reset          | Clears board and starts fresh          |
+| Logic          | Description                        |
+| -------------- | ---------------------------------- |
+| Win Detection  | Checks rows, columns and diagonals |
+| Turn Switching | Alternates players automatically   |
+| Draw Check     | Detects stalemate conditions       |
+| Reset          | Clears board and starts fresh      |
+
+---
 
 ## UI Features
 
-* Interactive hover effects on cells
-* Winning state announcement
+* Interactive hover effects
 * Dynamic turn indicator
-* Responsive game grid
-* Smooth transitions and button interactions
+* Winning state announcement
+* Responsive game board layout
+* Smooth button and cell transitions
 
 ---
 
 ## File Overview
 
-## `index.html`
+### `index.html`
 
-Semantic HTML structure containing the game board, status display, and restart controls.
+Semantic structure containing:
 
-## `style.css`
+* Game board
+* Turn status display
+* Restart controls
 
-All styling handled using CSS.
+---
 
-Key sections:
+### `style.css`
 
-* Grid layout — 3x3 game board using CSS Grid
-* Hover states — interactive cell highlighting
-* Win state styling — visual feedback for game result
-* Responsive layout — mobile-friendly adjustments
+Responsible for:
 
-## `script.js`
+* 3×3 board layout using CSS Grid
+* Hover interactions
+* Winning state styling
+* Responsive mobile layout
 
-Vanilla JavaScript, no dependencies.
+---
 
-| Function         | What it does                   |
+### `script.js`
+
+Core game engine written in vanilla JavaScript.
+
+| Function         | Purpose                        |
 | ---------------- | ------------------------------ |
 | `handleClick(i)` | Places move in selected square |
-| `checkWinner()`  | Tests all winning combinations |
-| `switchTurn()`   | Alternates between X and O     |
-| `resetGame()`    | Clears board and restarts game |
+| `checkWinner()`  | Evaluates winning combinations |
+| `switchTurn()`   | Alternates turns               |
+| `resetGame()`    | Resets board state             |
 | `updateStatus()` | Updates turn/winner display    |
 
 ---
 
 ## Game State
 
-Board state is managed as an array:
+Board state is represented as:
 
-```json
+```json id="tt3"
 [
- "X",
- null,
- "O",
- null,
- "X",
- null,
- null,
- "O",
- null
+"X",
+null,
+"O",
+null,
+"X",
+null,
+null,
+"O",
+null
 ]
 ```
 
@@ -113,9 +160,7 @@ Each move updates state and re-runs winner checks.
 
 ## Winning Combinations
 
-The game checks all standard combinations:
-
-```javascript
+```javascript id="tt4"
 [
 [0,1,2],
 [3,4,5],
@@ -130,24 +175,32 @@ The game checks all standard combinations:
 
 ---
 
+## Concepts Demonstrated
+
+* Game-state management
+* Conditional logic
+* DOM event handling
+* Array-based win evaluation
+* Interactive UI design
+
+---
+
 ## Browser Support
 
-| Browser     | Support |
-| ----------- | ------- |
-| Chrome 90+  | ✅       |
-| Firefox 88+ | ✅       |
-| Safari 14+  | ✅       |
-| Edge 90+    | ✅       |
+| Browser     | Support   |
+| ----------- | --------- |
+| Chrome 90+  | Supported |
+| Firefox 88+ | Supported |
+| Safari 14+  | Supported |
+| Edge 90+    | Supported |
 
 ---
 
 ## Customization
 
-## Change board accent color
+### Change Board Accent Color
 
-In `style.css` update:
-
-```css
+```css id="tt5"
 :root{
 --accent:#00e5ff;
 }
@@ -155,9 +208,9 @@ In `style.css` update:
 
 ---
 
-## Change X and O colors
+### Change X and O Colors
 
-```css
+```css id="tt6"
 .x{
 color:#00e5ff;
 }
@@ -169,20 +222,20 @@ color:#ff6b6b;
 
 ---
 
-## Add Single-Player AI (Future Upgrade)
+## Future Improvements
 
-Possible enhancement:
+Potential upgrades:
 
 * Minimax AI opponent
-* Difficulty modes (Easy / Hard)
+* Difficulty levels
 * Scoreboard tracking
-* Multiplayer online version
+* Multiplayer over WebSockets
 
 ---
 
 ## License
 
-Free to use and modify for personal and commercial projects.
+Free to use and modify for personal or commercial projects.
 
 Built with HTML, CSS and vanilla JavaScript.
 No frameworks. No build tools. Just open and play.
