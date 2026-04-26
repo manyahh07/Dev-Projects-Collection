@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Petal — Personal Expense Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <!-- Decorative blobs -->
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+
+  <div class="app-wrapper">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="logo">
+        <span class="logo-icon">🌸</span>
+        <span class="logo-text">Petal</span>
+      </div>
+      <nav class="nav">
+        <a href="#" class="nav-item active" data-section="dashboard" onclick="showSection('dashboard', this)">
+          <span class="nav-icon">✦</span> Dashboard
+        </a>
+        <a href="#" class="nav-item" data-section="add" onclick="showSection('add', this)">
+          <span class="nav-icon">＋</span> Add Transaction
+        </a>
+        <a href="#" class="nav-item" data-section="history" onclick="showSection('history', this)">
+          <span class="nav-icon">◈</span> History
+        </a>
+        <a href="#" class="nav-item" data-section="budget" onclick="showSection('budget', this)">
+          <span class="nav-icon">◎</span> Budgets
+        </a>
+        <a href="#" class="nav-item" data-section="charts" onclick="showSection('charts', this)">
+          <span class="nav-icon">◑</span> Charts
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="month-badge" id="currentMonth"></div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+
+      <!-- ── DASHBOARD ── -->
+      <section id="section-dashboard" class="section active">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Good day! 🌷</h1>
+            <p class="page-sub">Here's your financial snapshot</p>
+          </div>
+          <button class="btn-pill btn-accent" onclick="showSection('add', document.querySelector('[data-section=add]'))">+ Add</button>
+        </div>
+
+        <!-- Summary Cards -->
+        <div class="cards-grid">
+          <div class="stat-card card-balance">
+            <div class="card-label">Net Balance</div>
+            <div class="card-value" id="db-balance">₹0</div>
+            <div class="card-meta" id="db-savings-line">Savings rate: 0%</div>
+          </div>
+          <div class="stat-card card-income">
+            <div class="card-label">Total Income</div>
+            <div class="card-value" id="db-income">₹0</div>
+            <div class="card-meta">This month</div>
+          </div>
+          <div class="stat-card card-expense">
+            <div class="card-label">Total Expenses</div>
+            <div class="card-value" id="db-expense">₹0</div>
+            <div class="card-meta">This month</div>
+          </div>
+          <div class="stat-card card-needs">
+            <div class="card-label">Needs vs Wants</div>
+            <div class="card-value" id="db-needs">–</div>
+            <div class="card-meta" id="db-wants-meta">Score based on categories</div>
+          </div>
+        </div>
+
+        <!-- Budget alerts -->
+        <div id="alerts-container"></div>
+
+        <!-- Burn rate insight -->
+        <div id="burn-rate-card" class="insight-card" style="display:none">
+          <span class="insight-icon">🔥</span>
+          <div>
+            <div class="insight-title">Monthly Burn Rate Prediction</div>
+            <div class="insight-body" id="burn-rate-text"></div>
+          </div>
+        </div>
+
+        <!-- Recent transactions -->
+        <div class="section-block">
+          <div class="block-header">
+            <h2 class="block-title">Recent Transactions</h2>
+            <a href="#" class="link-subtle" onclick="showSection('history', document.querySelector('[data-section=history]'))">View all →</a>
+          </div>
+          <ul class="txn-list" id="recent-list"></ul>
+        </div>
+      </section>
+
+      <!-- ── ADD TRANSACTION ── -->
+      <section id="section-add" class="section">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Add Transaction</h1>
+            <p class="page-sub">Log income or an expense</p>
+          </div>
+        </div>
+
+        <div class="form-card">
+          <!-- Type toggle -->
+          <div class="type-toggle">
+            <button class="toggle-btn active" id="toggle-income" onclick="setType('income')">💰 Income</button>
+            <button class="toggle-btn" id="toggle-expense" onclick="setType('expense')">💸 Expense</button>
+          </div>
+
+          <div class="form-grid">
+            <div class="field">
+              <label>Description</label>
+              <input id="f-desc" type="text" placeholder="e.g. Salary, Groceries…" />
+            </div>
+            <div class="field">
+              <label>Amount (₹)</label>
+              <input id="f-amount" type="number" placeholder="0.00" min="0" />
+            </div>
+            <div class="field">
+              <label>Category</label>
+              <select id="f-category">
+                <option value="Food">🍜 Food</option>
+                <option value="Rent">🏠 Rent</option>
+                <option value="Travel">✈️ Travel</option>
+                <option value="Shopping">🛍️ Shopping</option>
+                <option value="Health">💊 Health</option>
+                <option value="Entertainment">🎬 Entertainment</option>
+                <option value="Utilities">💡 Utilities</option>
+                <option value="Freelance">💻 Freelance</option>
+                <option value="Salary">💼 Salary</option>
+                <option value="Other">📦 Other</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Date</label>
+              <input id="f-date" type="date" />
+            </div>
+            <div class="field full-width">
+              <label>Notes (optional)</label>
+              <input id="f-notes" type="text" placeholder="Any extra details…" />
+            </div>
+          </div>
+
+          <button class="btn-pill btn-accent btn-big" onclick="addTransaction()">Add Transaction ✦</button>
+        </div>
+      </section>
+
+      <!-- ── HISTORY ── -->
+      <section id="section-history" class="section">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Transaction History</h1>
+            <p class="page-sub">All your logged transactions</p>
+          </div>
+        </div>
+
+        <div class="filter-bar">
+          <input id="search-input" type="text" placeholder="🔍  Search transactions…" oninput="renderHistory()" />
+          <select id="filter-cat" onchange="renderHistory()">
+            <option value="all">All Categories</option>
+            <option value="Food">Food</option>
+            <option value="Rent">Rent</option>
+            <option value="Travel">Travel</option>
+            <option value="Shopping">Shopping</option>
+            <option value="Health">Health</option>
+            <option value="Entertainment">Entertainment</option>
+            <option value="Utilities">Utilities</option>
+            <option value="Freelance">Freelance</option>
+            <option value="Salary">Salary</option>
+            <option value="Other">Other</option>
+          </select>
+          <select id="filter-type" onchange="renderHistory()">
+            <option value="all">Income & Expense</option>
+            <option value="income">Income only</option>
+            <option value="expense">Expense only</option>
+          </select>
+        </div>
+
+        <ul class="txn-list" id="history-list"></ul>
+      </section>
+
+      <!-- ── BUDGETS ── -->
+      <section id="section-budget" class="section">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Budget Manager</h1>
+            <p class="page-sub">Set monthly category limits</p>
+          </div>
+        </div>
+
+        <div class="form-card">
+          <div class="form-grid">
+            <div class="field">
+              <label>Category</label>
+              <select id="b-category">
+                <option value="Food">🍜 Food</option>
+                <option value="Rent">🏠 Rent</option>
+                <option value="Travel">✈️ Travel</option>
+                <option value="Shopping">🛍️ Shopping</option>
+                <option value="Health">💊 Health</option>
+                <option value="Entertainment">🎬 Entertainment</option>
+                <option value="Utilities">💡 Utilities</option>
+                <option value="Other">📦 Other</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Monthly Budget (₹)</label>
+              <input id="b-amount" type="number" placeholder="e.g. 5000" min="0" />
+            </div>
+          </div>
+          <button class="btn-pill btn-accent" onclick="setBudget()">Set Budget</button>
+        </div>
+
+        <div class="budget-list" id="budget-list"></div>
+      </section>
+
+      <!-- ── CHARTS ── -->
+      <section id="section-charts" class="section">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Charts & Insights</h1>
+            <p class="page-sub">Visualise your money flow</p>
+          </div>
+        </div>
+
+        <div class="charts-grid">
+          <div class="chart-card">
+            <h3 class="chart-title">Spending by Category</h3>
+            <canvas id="pie-chart"></canvas>
+          </div>
+          <div class="chart-card">
+            <h3 class="chart-title">Monthly Income vs Expenses</h3>
+            <canvas id="bar-chart"></canvas>
+          </div>
+        </div>
+
+        <!-- Insight: category trend -->
+        <div id="trend-insight" class="insight-card" style="display:none">
+          <span class="insight-icon">📊</span>
+          <div>
+            <div class="insight-title">Spending Insight</div>
+            <div class="insight-body" id="trend-text"></div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- EDIT MODAL -->
+  <div class="modal-overlay" id="modal-overlay" onclick="closeModal()">
+    <div class="modal" onclick="event.stopPropagation()">
+      <h2 class="modal-title">Edit Transaction</h2>
+      <input type="hidden" id="edit-id" />
+      <div class="form-grid">
+        <div class="field">
+          <label>Description</label>
+          <input id="edit-desc" type="text" />
+        </div>
+        <div class="field">
+          <label>Amount (₹)</label>
+          <input id="edit-amount" type="number" />
+        </div>
+        <div class="field">
+          <label>Category</label>
+          <select id="edit-category">
+            <option value="Food">🍜 Food</option>
+            <option value="Rent">🏠 Rent</option>
+            <option value="Travel">✈️ Travel</option>
+            <option value="Shopping">🛍️ Shopping</option>
+            <option value="Health">💊 Health</option>
+            <option value="Entertainment">🎬 Entertainment</option>
+            <option value="Utilities">💡 Utilities</option>
+            <option value="Freelance">💻 Freelance</option>
+            <option value="Salary">💼 Salary</option>
+            <option value="Other">📦 Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Type</label>
+          <select id="edit-type">
+            <option value="income">Income</option>
+            <option value="expense">Expense</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Date</label>
+          <input id="edit-date" type="date" />
+        </div>
+        <div class="field full-width">
+          <label>Notes</label>
+          <input id="edit-notes" type="text" />
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-pill btn-ghost" onclick="closeModal()">Cancel</button>
+        <button class="btn-pill btn-accent" onclick="saveEdit()">Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
