@@ -3,509 +3,90 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TIC TAC TOE</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-
-:root{
-  --bg:#07090f;
-  --x-col:#00d4ff;
-  --o-col:#ff4f6d;
-  --x-glow:rgba(0,212,255,0.4);
-  --o-glow:rgba(255,79,109,0.4);
-  --text:#e8edf5;
-  --dim:rgba(255,255,255,0.3);
-  --gold:#ffd700;
-}
-
-body{
-  min-height:100vh;
-  background:var(--bg);
-  display:flex;align-items:center;justify-content:center;
-  font-family:'Exo 2',sans-serif;
-  color:var(--text);
-  overflow:hidden;
-}
-
-body::before{
-  content:'';position:fixed;inset:0;
-  background-image:
-    linear-gradient(rgba(0,212,255,0.025) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(0,212,255,0.025) 1px,transparent 1px);
-  background-size:44px 44px;
-  animation:gs 24s linear infinite;pointer-events:none;
-}
-@keyframes gs{to{background-position:44px 44px}}
-
-body::after{
-  content:'';position:fixed;inset:0;
-  background:
-    radial-gradient(ellipse 70% 50% at 15% 25%,rgba(0,212,255,0.06) 0%,transparent 60%),
-    radial-gradient(ellipse 60% 60% at 85% 75%,rgba(255,79,109,0.06) 0%,transparent 60%);
-  pointer-events:none;
-}
-
-.screen{
-  position:absolute;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  width:100%;height:100%;
-  transition:opacity 0.35s,transform 0.35s;
-}
-.screen.hidden{opacity:0;pointer-events:none;transform:scale(0.95)}
-
-/* ── MENU ── */
-.logo{
-  font-family:'Orbitron',sans-serif;
-  font-size:clamp(2.2rem,6vw,3.8rem);font-weight:900;letter-spacing:0.12em;
-  background:linear-gradient(135deg,var(--x-col) 30%,var(--o-col));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  filter:drop-shadow(0 0 24px rgba(0,212,255,0.35));
-  margin-bottom:6px;
-}
-.logo-sub{font-size:11px;letter-spacing:0.42em;color:var(--dim);text-transform:uppercase;margin-bottom:52px}
-
-.mode-cards{display:flex;gap:18px;flex-wrap:wrap;justify-content:center}
-.mode-card{
-  width:190px;padding:30px 18px;
-  background:rgba(255,255,255,0.028);
-  border:1px solid rgba(255,255,255,0.07);
-  border-radius:22px;cursor:pointer;
-  transition:transform 0.22s,box-shadow 0.22s,border-color 0.22s;
-  text-align:center;position:relative;overflow:hidden;
-}
-.mode-card::after{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(135deg,transparent,rgba(255,255,255,0.035));
-  opacity:0;transition:opacity 0.22s;
-}
-.mode-card:hover{transform:translateY(-7px);border-color:rgba(0,212,255,0.28);box-shadow:0 18px 44px rgba(0,0,0,0.55),0 0 28px rgba(0,212,255,0.1)}
-.mode-card:hover::after{opacity:1}
-.mode-card:active{transform:translateY(-2px) scale(0.97)}
-.mode-icon{font-size:46px;margin-bottom:14px;display:block}
-.mode-title{font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700;letter-spacing:0.15em;margin-bottom:8px}
-.mode-desc{font-size:12px;color:var(--dim);line-height:1.6}
-
-.diff-row{
-  display:flex;gap:10px;margin-top:38px;align-items:center;
-  opacity:0;pointer-events:none;transition:opacity 0.3s;
-}
-.diff-row.show{opacity:1;pointer-events:auto}
-.diff-label{font-size:11px;letter-spacing:0.18em;color:var(--dim);margin-right:4px}
-.diff-btn{
-  padding:6px 15px;border-radius:20px;
-  border:1px solid rgba(255,255,255,0.1);
-  background:transparent;color:var(--dim);
-  font-family:'Exo 2',sans-serif;font-size:12px;cursor:pointer;
-  transition:all 0.18s;letter-spacing:0.06em;
-}
-.diff-btn:hover,.diff-btn.active{background:rgba(0,212,255,0.14);border-color:var(--x-col);color:var(--x-col)}
-
-/* ── GAME ── */
-.game-wrap{
-  display:flex;flex-direction:column;align-items:center;
-  padding:20px 16px;
-}
-.game-header{
-  display:flex;align-items:center;justify-content:space-between;
-  width:100%;max-width:400px;margin-bottom:24px;
-}
-.icon-btn{
-  width:38px;height:38px;border-radius:10px;
-  border:1px solid rgba(255,255,255,0.09);background:transparent;
-  color:var(--dim);font-size:17px;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-  transition:all 0.18s;
-}
-.icon-btn:hover{border-color:rgba(255,255,255,0.28);color:#fff}
-.game-title{font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.22em;color:var(--dim)}
-
-.score-bar{
-  display:flex;align-items:stretch;
-  width:100%;max-width:400px;
-  background:rgba(255,255,255,0.028);
-  border:1px solid rgba(255,255,255,0.055);
-  border-radius:16px;overflow:hidden;margin-bottom:22px;
-}
-.score-slot{flex:1;padding:13px 10px;text-align:center;transition:background 0.3s}
-.score-slot.lit{background:rgba(255,255,255,0.04)}
-.s-label{font-family:'Orbitron',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.14em;margin-bottom:3px}
-.score-slot.xs .s-label{color:var(--x-col)}
-.score-slot.os .s-label{color:var(--o-col)}
-.draw-slot .s-label{color:var(--dim)}
-.s-num{font-size:24px;font-weight:600;line-height:1}
-.s-name{font-size:9px;color:var(--dim);margin-top:2px;letter-spacing:0.05em}
-.sdiv{width:1px;background:rgba(255,255,255,0.055);align-self:stretch}
-.draw-slot{flex:0 0 76px;padding:13px 8px;text-align:center}
-
-.turn-row{
-  display:flex;align-items:center;gap:10px;margin-bottom:18px;
-  font-size:12px;letter-spacing:0.1em;color:var(--dim);min-height:26px;
-}
-.tsym{font-family:'Orbitron',sans-serif;font-size:15px;font-weight:900;transition:all 0.25s}
-.tsym.x{color:var(--x-col);text-shadow:0 0 14px var(--x-glow)}
-.tsym.o{color:var(--o-col);text-shadow:0 0 14px var(--o-glow)}
-
-/* Board */
-.board-wrap{position:relative}
-.board{
-  display:grid;grid-template-columns:repeat(3,1fr);
-  width:min(340px,82vw);height:min(340px,82vw);
-  position:relative;
-}
-/* Grid lines */
-.board::before{
-  content:'';position:absolute;
-  left:calc(33.33% - 1px);top:8%;bottom:8%;width:2px;
-  background:rgba(255,255,255,0.11);border-radius:2px;
-  box-shadow:calc(33.33%) 0 0 rgba(255,255,255,0.11);
-}
-.board::after{
-  content:'';position:absolute;
-  top:calc(33.33% - 1px);left:8%;right:8%;height:2px;
-  background:rgba(255,255,255,0.11);border-radius:2px;
-  box-shadow:0 calc(33.33%) 0 rgba(255,255,255,0.11);
-}
-.cell{
-  display:flex;align-items:center;justify-content:center;
-  cursor:pointer;
-  font-family:'Orbitron',sans-serif;
-  font-size:clamp(2rem,8vw,3.2rem);font-weight:900;
-  border-radius:6px;transition:background 0.15s;
-  user-select:none;-webkit-tap-highlight-color:transparent;
-  position:relative;
-}
-.cell:hover:not(.taken){background:rgba(255,255,255,0.03)}
-.cell.taken{cursor:default}
-.mark{display:inline-block;transform:scale(0);transition:transform 0.28s cubic-bezier(0.34,1.56,0.64,1)}
-.mark.show{transform:scale(1)}
-.cell.xc .mark{color:var(--x-col);text-shadow:0 0 18px var(--x-glow),0 0 36px var(--x-glow)}
-.cell.oc .mark{color:var(--o-col);text-shadow:0 0 18px var(--o-glow),0 0 36px var(--o-glow)}
-.cell.wc .mark{animation:wp 0.7s ease infinite alternate}
-@keyframes wp{from{filter:brightness(1)}to{filter:brightness(1.6) drop-shadow(0 0 10px currentColor)}}
-.cell.wc::after{content:'';position:absolute;inset:5px;border-radius:10px;background:rgba(255,255,255,0.045);animation:wbg 0.7s ease infinite alternate}
-@keyframes wbg{to{background:rgba(255,255,255,0.09)}}
-
-.ai-thinking{
-  position:absolute;bottom:-30px;left:50%;transform:translateX(-50%);
-  font-size:11px;letter-spacing:0.15em;color:var(--o-col);
-  display:flex;align-items:center;gap:5px;
-  opacity:0;transition:opacity 0.3s;white-space:nowrap;
-}
-.ai-thinking.show{opacity:1}
-.dots span{animation:db 1.2s ease infinite}
-.dots span:nth-child(2){animation-delay:.2s}
-.dots span:nth-child(3){animation-delay:.4s}
-@keyframes db{0%,80%,100%{opacity:.2}40%{opacity:1}}
-
-.result-banner{
-  margin-top:20px;text-align:center;min-height:58px;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
-}
-.rmain{
-  font-family:'Orbitron',sans-serif;font-size:clamp(13px,3vw,17px);
-  font-weight:700;letter-spacing:0.15em;
-  opacity:0;transform:translateY(8px);transition:all 0.35s 0.15s;
-}
-.rmain.show{opacity:1;transform:translateY(0)}
-.rmain.xw{color:var(--x-col);text-shadow:0 0 18px var(--x-glow)}
-.rmain.ow{color:var(--o-col);text-shadow:0 0 18px var(--o-glow)}
-.rmain.dr{color:var(--gold);text-shadow:0 0 18px rgba(255,215,0,0.4)}
-.rsub{font-size:10px;color:var(--dim);letter-spacing:0.12em;opacity:0;transition:opacity 0.3s 0.45s}
-.rsub.show{opacity:1}
-.pa-btn{
-  margin-top:10px;padding:9px 26px;border-radius:30px;
-  border:1px solid rgba(255,255,255,0.13);background:rgba(255,255,255,0.05);
-  color:var(--text);font-family:'Exo 2',sans-serif;font-size:13px;font-weight:600;
-  letter-spacing:0.1em;cursor:pointer;
-  opacity:0;pointer-events:none;
-  transition:opacity 0.3s 0.65s,background 0.18s,transform 0.18s;
-}
-.pa-btn.show{opacity:1;pointer-events:auto}
-.pa-btn:hover{background:rgba(255,255,255,0.1);transform:translateY(-2px)}
-.pa-btn:active{transform:scale(0.97)}
-
-/* Particles */
-.particles{position:fixed;inset:0;pointer-events:none;z-index:999}
-.pt{
-  position:absolute;border-radius:50%;
-  animation:pf var(--d,1s) ease-out forwards;
-  opacity:0;
-}
-@keyframes pf{
-  0%{opacity:1;transform:translate(0,0) scale(1)}
-  100%{opacity:0;transform:translate(var(--tx),var(--ty)) scale(0)}
-}
-</style>
+<title>Petal · Tic Tac Toe</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="particles" id="particles"></div>
 
-<!-- MENU -->
+<!-- MENU SCREEN -->
 <div class="screen" id="menuScreen">
-  <div class="logo">TIC TAC TOE</div>
-  <div class="logo-sub">Select game mode</div>
+  <div class="logo">Can You Tic Tac Toe?</div>
+  <div class="logo-sub">choose your game mode</div>
 
   <div class="mode-cards">
-    <div class="mode-card" onclick="pickMode('2p')">
+    <div class="mode-card card-pink" onclick="pickMode('2p')">
       <span class="mode-icon">👥</span>
-      <div class="mode-title">2 PLAYERS</div>
+      <div class="mode-title">2 Players</div>
       <div class="mode-desc">Play against a friend on the same device</div>
     </div>
-    <div class="mode-card" onclick="pickMode('ai')">
+    <div class="mode-card card-lavender" onclick="pickMode('ai')">
       <span class="mode-icon">🤖</span>
-      <div class="mode-title">VS COMPUTER</div>
+      <div class="mode-title">vs Computer</div>
       <div class="mode-desc">Challenge the AI — can you beat it?</div>
     </div>
   </div>
 
   <div class="diff-row" id="diffRow">
-    <span class="diff-label">DIFFICULTY :</span>
-    <button class="diff-btn" onclick="setDiff('easy',this)">EASY</button>
-    <button class="diff-btn active" onclick="setDiff('medium',this)">MEDIUM</button>
-    <button class="diff-btn" onclick="setDiff('hard',this)">HARD</button>
+    <span class="diff-label">Difficulty :</span>
+    <button class="diff-btn" onclick="setDiff('easy',this)">Easy</button>
+    <button class="diff-btn active" onclick="setDiff('medium',this)">Medium</button>
+    <button class="diff-btn" onclick="setDiff('hard',this)">Hard</button>
   </div>
 </div>
 
-<!-- GAME -->
+<!-- GAME SCREEN -->
 <div class="screen hidden" id="gameScreen">
   <div class="game-wrap">
+
     <div class="game-header">
       <button class="icon-btn" onclick="goMenu()">←</button>
-      <div class="game-title" id="gTitle">TWO PLAYERS</div>
-      <button class="icon-btn" onclick="newRound()" title="Restart round">↺</button>
+      <div class="game-title" id="gTitle">Two Players</div>
+      <button class="icon-btn" onclick="newRound()" title="Restart">↺</button>
     </div>
 
     <div class="score-bar">
-      <div class="score-slot xs" id="sX">
+      <div class="score-slot slot-x" id="sX">
         <div class="s-label">X</div>
         <div class="s-num" id="sXn">0</div>
-        <div class="s-name">PLAYER 1</div>
+        <div class="s-name">Player 1</div>
       </div>
       <div class="sdiv"></div>
-      <div class="draw-slot">
-        <div class="s-label" style="color:var(--dim)">—</div>
+      <div class="score-slot slot-draw">
+        <div class="s-label">—</div>
         <div class="s-num" id="sDn">0</div>
-        <div class="s-name">DRAWS</div>
+        <div class="s-name">Draws</div>
       </div>
       <div class="sdiv"></div>
-      <div class="score-slot os" id="sO">
+      <div class="score-slot slot-o" id="sO">
         <div class="s-label">O</div>
         <div class="s-num" id="sOn">0</div>
-        <div class="s-name" id="oName">PLAYER 2</div>
+        <div class="s-name" id="oName">Player 2</div>
       </div>
     </div>
 
     <div class="turn-row">
-      <span class="tsym x" id="tsym">X</span>
-      <span id="ttxt">PLAYER 1'S TURN</span>
+      <span class="tsym" id="tsym">X</span>
+      <span id="ttxt">Player 1's Turn</span>
     </div>
 
     <div class="board-wrap">
       <div class="board" id="board"></div>
       <div class="ai-thinking" id="aiDot">
-        AI THINKING<span class="dots"><span>.</span><span>.</span><span>.</span></span>
+        thinking<span class="dots"><span>.</span><span>.</span><span>.</span></span>
       </div>
     </div>
 
     <div class="result-banner">
       <div class="rmain" id="rmain"></div>
-      <div class="rsub show" id="rsub" style="opacity:0"></div>
-      <button class="pa-btn" id="paBtn" onclick="newRound()">PLAY AGAIN</button>
+      <button class="pa-btn" id="paBtn" onclick="newRound()">Play Again </button>
     </div>
+
   </div>
 </div>
 
-<script>
-const WINS=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
-let mode='2p', diff='medium';
-let bd=Array(9).fill(''), cur='X', over=false, locked=false;
-let sc={X:0,O:0,d:0};
-
-function pickMode(m){
-  mode=m;
-  document.getElementById('diffRow').classList.toggle('show',m==='ai');
-  if(m==='2p') launchGame();
-}
-function setDiff(d,btn){
-  diff=d;
-  document.querySelectorAll('.diff-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  launchGame();
-}
-function launchGame(){
-  document.getElementById('menuScreen').classList.add('hidden');
-  document.getElementById('gameScreen').classList.remove('hidden');
-  document.getElementById('gTitle').textContent=mode==='ai'?`VS AI · ${diff.toUpperCase()}`:'TWO PLAYERS';
-  document.getElementById('oName').textContent=mode==='ai'?'COMPUTER':'PLAYER 2';
-  sc={X:0,O:0,d:0}; updateSc();
-  newRound();
-}
-function goMenu(){
-  document.getElementById('gameScreen').classList.add('hidden');
-  document.getElementById('menuScreen').classList.remove('hidden');
-  document.getElementById('diffRow').classList.remove('show');
-}
-
-function newRound(){
-  bd=Array(9).fill(''); cur='X'; over=false; locked=false;
-  renderBoard(); updateTurn(); hideResult();
-}
-
-function renderBoard(){
-  const el=document.getElementById('board');
-  el.innerHTML='';
-  bd.forEach((v,i)=>{
-    const c=document.createElement('div');
-    c.className='cell'+(v?' taken '+(v==='X'?'xc':'oc'):'');
-    c.innerHTML=`<span class="mark${v?' show':''}">${v}</span>`;
-    c.addEventListener('click',()=>click(i));
-    el.appendChild(c);
-  });
-}
-
-function click(i){
-  if(over||bd[i]||locked) return;
-  if(mode==='ai'&&cur==='O') return;
-  play(i);
-}
-
-function play(i){
-  bd[i]=cur;
-  renderBoard();
-  const res=check();
-  if(res){end(res);return;}
-  cur=cur==='X'?'O':'X';
-  updateTurn();
-  if(mode==='ai'&&cur==='O'&&!over){
-    locked=true;
-    document.getElementById('aiDot').classList.add('show');
-    const delay=diff==='easy'?320:diff==='medium'?520:750;
-    setTimeout(()=>{
-      document.getElementById('aiDot').classList.remove('show');
-      const m=aiMove();
-      if(m!==-1){
-        bd[m]='O'; renderBoard();
-        const r=check();
-        if(r) end(r);
-        else{cur='X'; updateTurn();}
-      }
-      locked=false;
-    },delay);
-  }
-}
-
-function check(){
-  for(const[a,b,c]of WINS)
-    if(bd[a]&&bd[a]===bd[b]&&bd[a]===bd[c]) return{w:bd[a],combo:[a,b,c]};
-  if(bd.every(Boolean)) return{w:null};
-  return null;
-}
-
-function end(res){
-  over=true;
-  if(res.w){
-    sc[res.w]++;
-    res.combo.forEach(i=>{
-      document.getElementById('board').children[i].classList.add('wc');
-    });
-    showResult(res.w);
-    burst(res.w==='X'?'#00d4ff':'#ff4f6d');
-  } else {
-    sc.d++;
-    showResult(null);
-  }
-  updateSc();
-}
-
-function updateTurn(){
-  const sym=document.getElementById('tsym');
-  const txt=document.getElementById('ttxt');
-  sym.textContent=cur;
-  sym.className='tsym '+cur.toLowerCase();
-  const n=cur==='X'?'PLAYER 1':(mode==='ai'?'COMPUTER':'PLAYER 2');
-  txt.textContent=n+"'S TURN";
-  document.getElementById('sX').classList.toggle('lit',cur==='X');
-  document.getElementById('sO').classList.toggle('lit',cur==='O');
-}
-
-function updateSc(){
-  document.getElementById('sXn').textContent=sc.X;
-  document.getElementById('sOn').textContent=sc.O;
-  document.getElementById('sDn').textContent=sc.d;
-}
-
-function showResult(w){
-  const rm=document.getElementById('rmain');
-  const rs=document.getElementById('rsub');
-  const pb=document.getElementById('paBtn');
-  if(w){
-    const n=w==='X'?'PLAYER 1':(mode==='ai'?'COMPUTER':'PLAYER 2');
-    rm.textContent=n+' WINS!';
-    rm.className='rmain show '+(w==='X'?'xw':'ow');
-  } else {
-    rm.textContent="IT'S A DRAW!";
-    rm.className='rmain show dr';
-  }
-  rs.classList.add('show'); pb.classList.add('show');
-  document.getElementById('tsym').textContent='';
-  document.getElementById('ttxt').textContent='';
-}
-
-function hideResult(){
-  const rm=document.getElementById('rmain');
-  rm.className='rmain';
-  document.getElementById('rsub').classList.remove('show');
-  document.getElementById('paBtn').classList.remove('show');
-}
-
-// ── AI ──────────────────────────────────────────────────────────
-function aiMove(){
-  const empty=bd.map((v,i)=>v?null:i).filter(i=>i!==null);
-  if(!empty.length) return -1;
-  if(diff==='easy'&&Math.random()<0.72) return empty[Math.random()*empty.length|0];
-  if(diff==='medium'&&Math.random()<0.38) return empty[Math.random()*empty.length|0];
-  return minimax([...bd],'O',0).idx;
-}
-
-function minimax(b,p,d){
-  const r=winner(b);
-  if(r==='O') return{s:10-d};
-  if(r==='X') return{s:d-10};
-  if(b.every(Boolean)) return{s:0};
-  const moves=[];
-  b.forEach((v,i)=>{
-    if(v) return;
-    const nb=[...b]; nb[i]=p;
-    const s=minimax(nb,p==='O'?'X':'O',d+1).s;
-    moves.push({idx:i,s});
-  });
-  moves.sort((a,b)=>p==='O'?b.s-a.s:a.s-b.s);
-  return moves[0];
-}
-
-function winner(b){
-  for(const[a,c,d]of WINS)
-    if(b[a]&&b[a]===b[c]&&b[a]===b[d]) return b[a];
-  return null;
-}
-
-// ── Particles ───────────────────────────────────────────────────
-function burst(col){
-  const pc=document.getElementById('particles');
-  const cx=innerWidth/2, cy=innerHeight/2;
-  for(let i=0;i<52;i++){
-    const p=document.createElement('div');
-    p.className='pt';
-    const sz=3+Math.random()*7;
-    const ang=Math.random()*Math.PI*2;
-    const dist=90+Math.random()*230;
-    p.style.cssText=`width:${sz}px;height:${sz}px;background:${col};left:${cx}px;top:${cy}px;--tx:${Math.cos(ang)*dist}px;--ty:${Math.sin(ang)*dist}px;--d:${0.5+Math.random()*0.9}s;animation-delay:${Math.random()*0.18}s;box-shadow:0 0 6px ${col};`;
-    pc.appendChild(p);
-    setTimeout(()=>p.remove(),1600);
-  }
-}
-</script>
+<script src="script.js"></script>
 </body>
 </html>
