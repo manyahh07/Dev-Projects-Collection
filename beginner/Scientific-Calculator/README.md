@@ -6,7 +6,7 @@ A sleek, fully featured scientific calculator built with pure HTML, CSS and Java
 
 ## Preview
 
-![Scientific Calculator Interface](Calc.png)
+![Scientific Calculator Interface](CALC.png)
 
 
 
