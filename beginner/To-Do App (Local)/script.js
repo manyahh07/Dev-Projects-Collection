@@ -1,6 +1,10 @@
+/* ─────────────────────────────────────────
+   PETAL · TaskFlow Logic
+   ───────────────────────────────────────── */
+
 // ── State ─────────────────────────────────────────────────────
-let tasks = JSON.parse(localStorage.getItem('tf2_tasks') || '[]');
-let currentFilter = 'all';
+let tasks            = JSON.parse(localStorage.getItem('tf2_tasks') || '[]');
+let currentFilter    = 'all';
 let selectedPriority = 'none';
 
 // ── DOM helpers ────────────────────────────────────────────────
@@ -8,10 +12,10 @@ const $ = id => document.getElementById(id);
 
 function escHtml(str) {
   return str
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
+    .replace(/&/g,  '&amp;')
+    .replace(/</g,  '&lt;')
+    .replace(/>/g,  '&gt;')
+    .replace(/"/g,  '&quot;');
 }
 
 // ── Persistence ────────────────────────────────────────────────
@@ -38,7 +42,6 @@ function updateStats() {
 // ── Date / Time ────────────────────────────────────────────────
 function initDate() {
   const now    = new Date();
-  const days   = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
   const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   $('dateNum').textContent   = now.getDate();
   $('dateMonth').textContent = months[now.getMonth()];
@@ -75,8 +78,8 @@ function render() {
 
   if (!filtered.length) {
     const msgs = {
-      all:    ['📋', 'No tasks yet — add one above!'],
-      active: ['✅', 'All tasks completed. Nice work!'],
+      all:    ['🌸', 'No tasks yet — add one above!'],
+      active: ['✅', 'All tasks completed. Lovely work!'],
       done:   ['🗂️',  'No completed tasks yet.'],
     };
     const [icon, msg] = msgs[currentFilter];
@@ -130,7 +133,7 @@ function addTask() {
   const text  = input.value.trim();
   if (!text) {
     input.focus();
-    input.style.color = '#ff6b6b';
+    input.style.color = '#c06858';
     setTimeout(() => input.style.color = '', 600);
     return;
   }
@@ -173,7 +176,7 @@ function editTask(i) {
     const t = el.textContent.trim();
     if (t) tasks[i].text = t;
     else el.textContent = tasks[i].text;
-    el.onblur = null;
+    el.onblur    = null;
     el.onkeydown = null;
     render();
   }
