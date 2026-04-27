@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>TaskFlow</title>
+<title>TaskFlow · Petal</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -13,6 +13,7 @@
 <div class="blob blob-1"></div>
 <div class="blob blob-2"></div>
 <div class="blob blob-3"></div>
+<div class="blob blob-4"></div>
 
 <div class="app">
 
@@ -36,7 +37,7 @@
   </header>
 
   <div class="stats-row">
-    <div class="stat-card teal-card">
+    <div class="stat-card blue-card">
       <div class="stat-icon">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
           <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.8"/>
@@ -48,7 +49,7 @@
         <span class="stat-lbl">Completed</span>
       </div>
     </div>
-    <div class="stat-card coral-card">
+    <div class="stat-card brown-card">
       <div class="stat-icon">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
           <path d="M3 6h14M3 10h9M3 14h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
@@ -59,7 +60,7 @@
         <span class="stat-lbl">Active</span>
       </div>
     </div>
-    <div class="stat-card purple-card">
+    <div class="stat-card sand-card">
       <div class="stat-icon">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
           <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.8"/>
@@ -101,9 +102,9 @@
 
   <div class="tasks-header">
     <div class="filter-row">
-      <button class="filter-btn active" data-filter="all" onclick="setFilter('all')">All</button>
-      <button class="filter-btn" data-filter="active" onclick="setFilter('active')">Active</button>
-      <button class="filter-btn" data-filter="done" onclick="setFilter('done')">Done</button>
+      <button class="filter-btn active" data-filter="all"    onclick="setFilter('all')">All</button>
+      <button class="filter-btn"        data-filter="active" onclick="setFilter('active')">Active</button>
+      <button class="filter-btn"        data-filter="done"   onclick="setFilter('done')">Done</button>
     </div>
     <span class="task-count-badge" id="taskCountBadge">0</span>
   </div>
