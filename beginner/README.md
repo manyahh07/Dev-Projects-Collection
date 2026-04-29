@@ -1,0 +1,77 @@
+﻿# Beginner Projects
+# Beginner Projects Collection
+
+A curated collection of beginner-to-intermediate projects built to explore algorithms, frontend development, APIs, Python desktop applications and interactive software design.
+
+Each project focuses on a different core concept rather than repeating the same kind of beginner clone.
+
+---
+
+## Projects
+
+### Sorting Visualizer
+
+Interactive visualization platform implementing multiple sorting algorithms with animated operations, complexity references and algorithm theory.
+
+**Focus:** Data Structures, Algorithms, Async JavaScript
+
+---
+
+### Weather App
+
+Glassmorphism weather dashboard powered by live API data, dynamic themes, geolocation and multi-day forecasting.
+
+**Focus:** APIs, Fetch, Async Programming, Responsive UI
+
+---
+
+### TaskFlow To-Do App
+
+Productivity-oriented task manager with CRUD functionality, filters, priority tagging and localStorage persistence.
+
+**Focus:** State Management, DOM Manipulation, Local Storage
+
+---
+
+### YT Video Downloader
+
+Python desktop application for multi-format YouTube downloads using Tkinter, yt-dlp and threaded progress handling.
+
+**Focus:** Python GUI, Threading, External Libraries
+
+---
+
+### Scientific Calculator
+
+Feature-rich browser scientific calculator supporting advanced functions, memory operations and expression parsing.
+
+**Focus:** Mathematical Logic, Event Handling, Frontend Engineering
+
+---
+
+### Tic Tac Toe
+
+Classic game rebuilt with modern UI, turn-based state logic and winner/draw detection.
+
+**Focus:** Game Logic, DOM Events, State Management
+
+---
+
+## Skills Covered Across Projects
+
+* HTML, CSS, JavaScript
+* Python and Tkinter
+* API Integration
+* Data Structures and Algorithms
+* Local Storage and CRUD
+* Event-driven Programming
+* Multithreading
+* Interactive UI Engineering
+
+---
+
+## Purpose of This Collection
+
+This repository documents my progression from foundational programming concepts into practical software projects, with emphasis on problem solving, visual design and hands-on implementation.
+
+More intermediate and full-stack projects coming next.

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Petal · Tic Tac Toe</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="particles" id="particles"></div>
+
+<!-- MENU SCREEN -->
+<div class="screen" id="menuScreen">
+  <div class="logo">Can You Tic Tac Toe?</div>
+  <div class="logo-sub">choose your game mode</div>
+
+  <div class="mode-cards">
+    <div class="mode-card card-pink" onclick="pickMode('2p')">
+      <span class="mode-icon">👥</span>
+      <div class="mode-title">2 Players</div>
+      <div class="mode-desc">Play against a friend on the same device</div>
+    </div>
+    <div class="mode-card card-lavender" onclick="pickMode('ai')">
+      <span class="mode-icon">🤖</span>
+      <div class="mode-title">vs Computer</div>
+      <div class="mode-desc">Challenge the AI — can you beat it?</div>
+    </div>
+  </div>
+
+  <div class="diff-row" id="diffRow">
+    <span class="diff-label">Difficulty :</span>
+    <button class="diff-btn" onclick="setDiff('easy',this)">Easy</button>
+    <button class="diff-btn active" onclick="setDiff('medium',this)">Medium</button>
+    <button class="diff-btn" onclick="setDiff('hard',this)">Hard</button>
+  </div>
+</div>
+
+<!-- GAME SCREEN -->
+<div class="screen hidden" id="gameScreen">
+  <div class="game-wrap">
+
+    <div class="game-header">
+      <button class="icon-btn" onclick="goMenu()">←</button>
+      <div class="game-title" id="gTitle">Two Players</div>
+      <button class="icon-btn" onclick="newRound()" title="Restart">↺</button>
+    </div>
+
+    <div class="score-bar">
+      <div class="score-slot slot-x" id="sX">
+        <div class="s-label">X</div>
+        <div class="s-num" id="sXn">0</div>
+        <div class="s-name">Player 1</div>
+      </div>
+      <div class="sdiv"></div>
+      <div class="score-slot slot-draw">
+        <div class="s-label">—</div>
+        <div class="s-num" id="sDn">0</div>
+        <div class="s-name">Draws</div>
+      </div>
+      <div class="sdiv"></div>
+      <div class="score-slot slot-o" id="sO">
+        <div class="s-label">O</div>
+        <div class="s-num" id="sOn">0</div>
+        <div class="s-name" id="oName">Player 2</div>
+      </div>
+    </div>
+
+    <div class="turn-row">
+      <span class="tsym" id="tsym">X</span>
+      <span id="ttxt">Player 1's Turn</span>
+    </div>
+
+    <div class="board-wrap">
+      <div class="board" id="board"></div>
+      <div class="ai-thinking" id="aiDot">
+        thinking<span class="dots"><span>.</span><span>.</span><span>.</span></span>
+      </div>
+    </div>
+
+    <div class="result-banner">
+      <div class="rmain" id="rmain"></div>
+      <button class="pa-btn" id="paBtn" onclick="newRound()">Play Again </button>
+    </div>
+
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
